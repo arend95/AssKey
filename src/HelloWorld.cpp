@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <iostream>
 #include <string>
 #include <unistd.h>
@@ -5,10 +6,10 @@
 void PrintHello(int incr) {
     std::string inc = "";
     for(int i=0; i!=incr; i++) {
-        inc += " ";
+        inc += GetRandomSymbol();
     }
 
-    std::cout << 
+    std::cout <<
     inc << R"(     ______________________________________________________________________________  )" << '\n' <<
     inc << R"(    |    __      __     _________      __             __             __________    | )" << '\n' <<
     inc << R"(    |   |\_\    |\_\   |\________\    |\_\           |\_\           |\_________\   | )" << '\n' <<
@@ -19,31 +20,34 @@ void PrintHello(int incr) {
     inc << R"(    |   || |    || |   || |______     || |______     || |______     || |____|| |   | )" << '\n' <<
     inc << R"(    |   || |    || |   || |______\    || |______\    || |______\    || |____\| |   | )" << '\n' <<
     inc << R"(    |   \|_|    \|_|   \|_________|   \|_________|   \|_________|   \|_________|   | )" << '\n' <<
-    inc << R"(    |______________________________________________________________________________|
-        
-)" << inc << '\n';
+    inc << R"(    |______________________________________________________________________________| )" << '\n';
 }
-    
+
+char GetRandomSymbol() {
+  return (char) (rand() % 20 + 30);
+}
+
 void ClearScreen() {
-    std::cout << std::string(100, '\n') << std::endl;
+    system("clear");
+    // std::cout << std::string(100, '\n') << std::endl;
 }
 
 void UpDown(int vert) {
     std::cout << std::string(vert, '\n') << std::endl;
 }
-    
+
 int main() {
-    
+
     char input;
     bool flag = false;
     unsigned int microsecond = 1000000;
     int incr = 1;
     int vert = 1;
-    
+
     int direction = 1;
     int directionVert = 1;
-    
-    
+
+
 
     while(!flag) {
         //std::cin >> input;
@@ -56,10 +60,10 @@ int main() {
         if (vert == 0 || vert == 23) {directionVert = -directionVert;}
         incr += direction;
         vert += directionVert;
-        
+
         ClearScreen();
-        PrintHello(incr);
         UpDown(vert);
+        PrintHello(incr);
         usleep(0.1 * microsecond);
     }
     return 0;
